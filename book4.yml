@@ -1,0 +1,7 @@
+---
+- hosts: new
+  tasks:
+  - name: Run 
+    docker_container:
+      name: test
+      image: mhart/alpine-node

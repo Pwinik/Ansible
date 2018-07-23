@@ -1,0 +1,15 @@
+---
+- hosts: new
+  tasks:
+    - name: Stop container
+      docker_container:
+        name: hword
+        image: pwinik/hword
+        state: absent
+
+    - name: Remove old versions
+      apt: name={{item}} state=absent update_cache=yes
+      with_items:
+        - docker
+        - docker-engine
+        - docker-ce  

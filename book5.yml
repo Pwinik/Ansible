@@ -1,0 +1,7 @@
+---
+- hosts: new
+  vars:
+    loh: bla
+  tasks:
+  - name: bla
+    template: src=test.j2 dest=/root/test.txt

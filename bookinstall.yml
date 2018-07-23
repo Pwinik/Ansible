@@ -1,0 +1,30 @@
+---
+- hosts: new
+  tasks:
+    - name: Install needed packages
+      apt: name={{item}} state=present
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: Add a GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        id: 0EBFCD88
+        state: present
+
+    - name: Add a repo
+      apt_repository: repo='deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' state=present 
+
+    - name: Install Docker
+      apt: name="docker-ce" state=present update_cache=yes
+
+    - name: Run container
+      docker_container:
+        name: hworld
+        image: pwinik/hword
+        state: started
+        ports:
+          - "8080:8081"

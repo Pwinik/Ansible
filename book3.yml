@@ -1,0 +1,7 @@
+---
+- hosts: new
+  tasks:
+  - name: pull image
+    docker_image:
+      name: mhart/alpine-node 
+     

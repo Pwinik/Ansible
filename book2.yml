@@ -1,0 +1,29 @@
+---
+- hosts: new
+  tasks:
+  - name: gpg key
+    apt_key: url=https://apt.dockerproject.org/gpg state=present
+
+  - name: Apt upd & docker instal
+    apt_repository: repo="deb https://apt.dockerproject.org/repo ubuntu-{{ ansible_distribution_release }} main" state=present update_cache=yes
+
+  - name: install pip and docker
+    apt: name={{item}} state=present update_cache=yes
+    with_items:
+     - docker-engine
+     - python-pip
+
+  - name: Pip module
+    pip:
+     name: docker
+
+  - name: pull image
+    docker_image:
+     name: pwinik/hword
+
+  - name: run container
+    docker_container:
+      name: hword
+      image: pwinik/hword
+      ports:
+       - "8080:8081" 
